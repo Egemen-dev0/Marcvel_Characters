@@ -16,6 +16,8 @@ xhr.addEventListener("readystatechange", function() {
 
 xhr.open("GET", "http://gateway.marvel.com/v1/public/characters?ts=1&hash=0966c6c5647153700fc5aa2cfe1b5aba&apikey=a2d55ff212f0cfcf3ef24b3882e1093e");
 
+// If you want to add more characters try adding this at the of the request URL: &offset=100&limit=50 **Chage the Nbrs as you wish but limit can be 100 max!
+
 xhr.send();
 }, 
   // Look at BELOW==>

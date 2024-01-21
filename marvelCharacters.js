@@ -18,24 +18,47 @@ xhr.open("GET", "http://gateway.marvel.com/v1/public/characters?ts=1&hash=0966c6
 
 xhr.send();
 }, 
-// Look at BELOW==>
-// dataFormatter: function(){
-// let formatted = this.getDatafromAPI(function(textToBeFormatted){
-// JSON.parse(textToBeFormatted);
-// })
-// return formatted
-// },
+  // Look at BELOW==>
+ dataFormatter: function(acquiredApi){
+  return JSON.parse(acquiredApi).data.results // =>Bunu direkt buraya eklesem 
+ },
  }
 
+let layOut_Related_things = {
+
+  divCreator: function(chracterDetails){
+let list_Item_structure = `<div>
+<img src="${chracterDetails.thumbnail.path}/portrait_uncanny.${chracterDetails.thumbnail.extension}" alt="temp">
+ <h2>${chracterDetails.name}</h2>
+    <p>${chracterDetails.description}</p>
+</div>`
+
+return list_Item_structure
+  }
 
 
+
+}
+
+let theImplementor= {
+  listMaker: function(arrtoBecomeList){
+let bodyCatcher = document.getElementsByTagName("body")[0];
+let generatedListItemReceiver = "";
+for (let i = 0; i<arrtoBecomeList.length; i++){
+generatedListItemReceiver += layOut_Related_things.divCreator(arrtoBecomeList[i]); 
+  }
+bodyCatcher.innerHTML = generatedListItemReceiver;
+}
+
+
+}
 
 
 document.addEventListener("DOMContentLoaded", function(){
-aPI_Related_things.getDatafromAPI(function(acquiredApi){
-console.log(JSON.parse(acquiredApi))
-})
+  aPI_Related_things.getDatafromAPI(function(acquiredApi){
+    let formattedData = aPI_Related_things.dataFormatter(acquiredApi);
+    console.log(formattedData)
+    theImplementor.listMaker(formattedData)
 
-
-
+  })
 })

@@ -14,7 +14,7 @@ xhr.addEventListener("readystatechange", function() {
   }
 });
 
-xhr.open("GET", "http://gateway.marvel.com/v1/public/characters?ts=1&hash=0966c6c5647153700fc5aa2cfe1b5aba&apikey=a2d55ff212f0cfcf3ef24b3882e1093e");
+xhr.open("GET", `http://gateway.marvel.com/v1/public/characters?ts=1&hash=0966c6c5647153700fc5aa2cfe1b5aba&apikey=a2d55ff212f0cfcf3ef24b3882e1093e&offset=${layOut_Related_things.offset}&limit=20`);
 
 // If you want to add more characters try adding this at the of the request URL: &offset=100&limit=50 **Chage the Nbrs as you wish but limit can be 100 max!
 
@@ -38,11 +38,12 @@ let list_Item_structure = `<div>
 
 return list_Item_structure
   },
-
+  offset: 0,
 
 }
 
 let theImplementor= {
+  // BUTTONS DISSAPPEAR AFTER - FIX BELOW!
   listMaker: function(arrtoBecomeList){
 let bodyCatcher = document.getElementsByTagName("body")[0];
 let generatedListItemReceiver = "";
@@ -60,10 +61,19 @@ bodyCatcher.innerHTML = generatedListItemReceiver;
   
     })
 
-  }
+  },
+
+  nexButtonClicked: function(){
+aPI_Related_things.offset = aPI_Related_things.offset + 20;
+this.listGenerator()
+  },
+
+  prevButtonClicked: function(){
+    aPI_Related_things.offset = aPI_Related_things.offset - 20;
+    this.listGenerator()
+  },
 
 }
-
 
 document.addEventListener("DOMContentLoaded", function(data){
   theImplementor.listGenerator(data);

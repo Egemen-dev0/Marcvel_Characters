@@ -27,7 +27,8 @@ xhr.send();
  }
 
 let layOut_Related_things = {
-
+  page: 1,
+  
   divCreator: function(chracterDetails){
 let list_Item_structure = `<div>
 <img src="${chracterDetails.thumbnail.path}/portrait_uncanny.${chracterDetails.thumbnail.extension}" alt="temp">
@@ -36,8 +37,7 @@ let list_Item_structure = `<div>
 </div>`
 
 return list_Item_structure
-  }
-
+  },
 
 
 }
@@ -50,17 +50,21 @@ for (let i = 0; i<arrtoBecomeList.length; i++){
 generatedListItemReceiver += layOut_Related_things.divCreator(arrtoBecomeList[i]); 
   }
 bodyCatcher.innerHTML = generatedListItemReceiver;
+},
+
+  listGenerator: function(arrayListToBeShownonPage){
+    aPI_Related_things.getDatafromAPI(function(arrayListToBeShownonPage){
+      let formattedData = aPI_Related_things.dataFormatter(arrayListToBeShownonPage);
+      console.log(formattedData)
+      theImplementor.listMaker(formattedData)
+  
+    })
+
+  }
+
 }
 
 
-}
-
-
-document.addEventListener("DOMContentLoaded", function(){
-  aPI_Related_things.getDatafromAPI(function(acquiredApi){
-    let formattedData = aPI_Related_things.dataFormatter(acquiredApi);
-    console.log(formattedData)
-    theImplementor.listMaker(formattedData)
-
-  })
+document.addEventListener("DOMContentLoaded", function(data){
+  theImplementor.listGenerator(data);
 })

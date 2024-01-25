@@ -45,12 +45,13 @@ return list_Item_structure
 let theImplementor= {
   // BUTTONS DISSAPPEAR AFTER - FIX BELOW!
   listMaker: function(arrtoBecomeList){
-let bodyCatcher = document.getElementsByTagName("body")[0];
+let divCatcher = document.getElementsByTagName("div")[0];
 let generatedListItemReceiver = "";
 for (let i = 0; i<arrtoBecomeList.length; i++){
 generatedListItemReceiver += layOut_Related_things.divCreator(arrtoBecomeList[i]); 
   }
-bodyCatcher.innerHTML = generatedListItemReceiver;
+divCatcher.innerHTML ="";  
+divCatcher.innerHTML = generatedListItemReceiver;
 },
 
   listGenerator: function(arrayListToBeShownonPage){
@@ -64,12 +65,14 @@ bodyCatcher.innerHTML = generatedListItemReceiver;
   },
 
   nexButtonClicked: function(){
-aPI_Related_things.offset = aPI_Related_things.offset + 20;
+    layOut_Related_things.offset += 20;
 this.listGenerator()
   },
 
   prevButtonClicked: function(){
-    aPI_Related_things.offset = aPI_Related_things.offset - 20;
+    if (layOut_Related_things.offset >= 20){
+      layOut_Related_things.offset -= 20;
+    }
     this.listGenerator()
   },
 

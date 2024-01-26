@@ -20,6 +20,20 @@ xhr.open("GET", `http://gateway.marvel.com/v1/public/characters?ts=1&hash=0966c6
 
 xhr.send();
 }, 
+  getDataAsync: function(){
+    return new Promise((resolve, reject) => {
+      try{
+        aPI_Related_things.getDatafromAPI(function(acquiredApi){
+          resolve(acquiredApi)
+        });
+      } catch (error){
+        alert("Olmadı Başkan here is why:", error);
+        reject(error);
+      }
+
+
+    });
+  },
   // Look at BELOW==>
  dataFormatter: function(acquiredApi){
   return JSON.parse(acquiredApi).data.results // =>Bunu direkt buraya eklesem 
@@ -54,30 +68,33 @@ divCatcher.innerHTML ="";
 divCatcher.innerHTML = generatedListItemReceiver;
 },
 
-  listGenerator: function(arrayListToBeShownonPage){
-    aPI_Related_things.getDatafromAPI(function(arrayListToBeShownonPage){
-      let formattedData = aPI_Related_things.dataFormatter(arrayListToBeShownonPage);
-      console.log(formattedData)
-      theImplementor.listMaker(formattedData)
-  
-    })
+  listGenerator: async function(){
+  let acquiredApi = await aPI_Related_things.getDataAsync();
+  let formattedData = aPI_Related_things.dataFormatter(acquiredApi);
+  theImplementor.listMaker(formattedData); 
+    // aPI_Related_things.getDatafromAPI(function(arrayListToBeShownonPage){
+   //   let formattedData = aPI_Related_things.dataFormatter(arrayListToBeShownonPage);
+   //   console.log(formattedData)
+   //   theImplementor.listMaker(formattedData)
+  //
+   // })
 
   },
 
-  nexButtonClicked: function(){
+  nexButtonClicked: async function(){
     layOut_Related_things.offset += 20;
-this.listGenerator()
+await this.listGenerator()
   },
 
-  prevButtonClicked: function(){
+  prevButtonClicked:async function(){
     if (layOut_Related_things.offset >= 20){
       layOut_Related_things.offset -= 20;
     }
-    this.listGenerator()
+    await this.listGenerator()
   },
 
 }
 
-document.addEventListener("DOMContentLoaded", function(data){
-  theImplementor.listGenerator(data);
+document.addEventListener("DOMContentLoaded", async function(){
+ await theImplementor.listGenerator();
 })
